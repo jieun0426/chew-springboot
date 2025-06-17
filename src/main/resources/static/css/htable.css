@@ -1,0 +1,99 @@
+@charset "UTF-8";
+table {
+	margin: 10px auto;
+	border-collapse: collapse;
+	font-size: 15px;
+}
+
+thead {
+	border-bottom: 2px solid #ED751C;
+	background-color: #fff4ea;
+}
+
+th {
+	padding: 15px 10px;
+	text-align: center;
+	color: #ED751C;
+	font-weight: bold;
+	background-color: white;
+	font-size: 16px;
+}
+td {
+	padding: 14px 10px;
+	text-align: center;
+	color: #333;
+	border-bottom: 1px solid #eee;
+	background-color: white;
+}
+textarea {
+	padding: 7px 10px;
+	resize: none;
+	float: left;
+	margin-left: 10px;
+	outline: none;
+}
+textarea:hover {
+	cursor: text;
+}
+textarea:focus {
+	cursor: text;
+	border: 2px solid #ED751C;
+	border-radius: 3px;
+	padding: 7px 10px;
+}
+
+input[type=text] {
+	width: 300px;
+	margin-right: 20px;
+	padding: 5px;
+	outline: none;
+}
+input[type=text]:hover {
+	cursor: text;
+	border: 1px solid #666;
+	border-radius: 3px;
+	padding: 6px;
+	box-shadow: none;
+}
+input[type=text]:focus, input[type=text]:active {
+	border: 2px solid #ED751C;
+	border-radius: 3px;
+	padding: 5px;
+}
+input[type=submit], input[type=button], input[type=reset],
+button[type=submit], button[type=button], button[type=reset] {
+	color: #fff;
+	background-color: #ED751C;
+	font-weight: bold;
+	width: 100px;
+	height: 30px;
+	border: none;
+	border-radius: 5px;
+	margin: 5px 15px;
+}
+.editBtn, #deleteBtn {
+	display: block;
+	color: #fff;
+	background-color: #ED751C;
+	font-weight: bold;
+	width: 80px;
+	height: 30px;
+	line-height: 30px;
+	border: none;
+	border-radius: 5px;
+	margin: 5px;
+	font-size: 15px;
+	padding: 0;
+}
+input[type=submit]:hover, input[type=button]:hover, input[type=reset]:hover,
+button[type=submit]:hover, button[type=button]:hover, button[type=reset]:hover,
+.editBtn:hover, .deleteBtn:hover {
+	cursor: pointer;
+	color: #fff;
+	background-color: #ED751C;
+}
+input[type=submit]:active, input[type=button]:active, input[type=reset]:active,
+button[type=submit]:active, button[type=button]:active, button[type=reset]:active,
+.editBtn:active, .deleteBtn:active {
+	background-color: #ca6210;
+}

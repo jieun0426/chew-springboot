@@ -1,0 +1,26 @@
+.slink {
+    text-decoration: none;
+    cursor: pointer; /* 클릭 가능 표시 */
+    font-weight: bold; /* 살짝 강조 */
+}
+
+.slink:hover {
+    color: #ED751C; /* 호버 시 색상 변경 */
+    text-decoration: underline; /* 호버 시 밑줄 */
+}
+
+.stars {
+	color: #ED751C;
+	font-size: 17px;
+}
+
+.store-name a {
+  color: #ED751C;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.fa-solid.fa-trash-can {
+  color: #ED751C;
+}

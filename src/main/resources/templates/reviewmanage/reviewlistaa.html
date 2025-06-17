@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>리뷰 관리</title>
+    <link rel="stylesheet" th:href="@{/css/htable.css}">
+    <link rel="stylesheet" th:href="@{/css/search.css}">
+    <link rel="stylesheet" th:href="@{/css/reviewwstarss.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+<section layout:fragment="content">
+    <br><br>
+    <div th:if="${#lists.isEmpty(reviewPage.content)}">
+        <p class="no-review">리뷰 내역이 없습니다.</p>
+    </div>
+
+    <div th:if="${!#lists.isEmpty(reviewPage.content)}">
+        <table width="1100px">
+            <thead>
+            <tr>
+                <th>매장명</th>
+                <th>작성자(ID)</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th>별점</th>
+                <th>삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="review : ${reviewPage.content}">
+                <td>
+                    <a th:href="@{/detailview(storecode=${review.store.storecode})}" class="slink"
+                       th:text="${review.store.storename}">매장명</a>
+                </td>
+                <td th:text="${review.id.id}"></td>
+                <td th:text="${review.title}"></td>
+                <td th:text="${review.content}"></td>
+                <td>
+                    <div class="stars">
+                        <span th:each="i : ${#numbers.sequence(1, 5)}">
+                            <span th:if="${i <= review.stars}">★</span>
+                            <span th:if="${i > review.stars}">☆</span>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <a th:href="@{/review/delete(id=${review.id.id},code=${review.id.storecode}, page=${nowpage})}"
+                       onclick="return confirm('정말 삭제하시겠습니까?')" title="삭제">
+                        <i class="fa-solid fa-trash-can" style="cursor: pointer;"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br><br>
+    <div class="pagination" th:if="${totalPage > 1}">
+        <ul style="display: flex; list-style: none; gap: 10px; justify-content: center; align-items: center; padding: 0; margin: 0;">
+
+            <li th:if="${nowPageBlock > 0}">
+                <a th:href="@{/reviewlistaa(page=${(nowPageBlock - 1) * pageBlockSize})}">이전</a>
+            </li>
+
+            <li th:each="pageNum : ${#numbers.sequence(nowPageBlock * pageBlockSize, T(java.lang.Math).min((nowPageBlock + 1) * pageBlockSize - 1, totalPage - 1))}">
+                <a th:if="${pageNum != nowpage}"
+                   th:href="@{/reviewlistaa(page=${pageNum})}"
+                   th:text="${pageNum + 1}"></a>
+                <span th:if="${pageNum == nowpage}"
+                      th:text="${pageNum + 1}"
+                      style="color: red; font-weight: bold;"></span>
+            </li>
+
+            <li th:if="${(nowPageBlock + 1) * pageBlockSize < totalPage}">
+                <a th:href="@{/reviewlistaa(page=${(nowPageBlock + 1) * pageBlockSize})}">다음 </a>
+            </li>
+        </ul>
+    </div>
+    <br><br>
+
+</section>
+</body>
+</html>

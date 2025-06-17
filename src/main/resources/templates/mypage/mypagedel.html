@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+    <link rel="stylesheet" th:href="@{/css/mypagedel.css}">
+    <link rel="stylesheet" th:href="@{/css/mypagemenu.css}">
+</head>
+<body>
+<section layout:fragment="content">
+
+    <!-- ✅ Flash 메시지 alert (layout:fragment 내부에 두고 제대로 인식되게 수정) -->
+    <div th:if="${alertMessage != null}">
+        <script th:inline="javascript">
+            alert([[${alertMessage}]]);
+            window.location.href = "/login?logout";
+        </script>
+    </div>
+    <div class="div-container">
+        <!-- 왼쪽 메뉴바 -->
+        <div class="category">
+            <h1>마이페이지</h1>
+            <nav>
+                <ul>
+                    <li><a th:href="@{/mypinfo}" class="menulink">회원정보 수정</a></li>
+                    <li><a th:href="@{/mypagebook}" class="menulink">예약내역</a></li>
+                    <li><a th:href="@{/mypagereview}" class="menulink">작성한 리뷰</a></li>
+                    <li><a th:href="@{/mypagedel}" class="menulink active">회원탈퇴</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- 탈퇴 폼 -->
+        <form class="form" th:action="@{/mypagedelsave}" method="post"
+              onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
+
+            <div id="heading">회원탈퇴</div>
+
+            <div class="warning-text">
+                *탈퇴 시, 계정은 삭제되며 복구되지 않습니다.
+            </div>
+
+            <input type="hidden" name="id" th:value="${#authentication.name}" />
+
+            <input class="input-field" type="password" name="pw" placeholder="비밀번호 입력" required />
+
+            <button id="loginButton" class="button login-btn" type="submit">완료</button>
+        </form>
+    </div>
+    <br>
+</section>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <link rel="stylesheet" th:href="@{/css/vtable.css}">
+</head>
+<body style="padding-top: 0">
+<section layout:fragment="content">
+    <h2>매장 정보</h2>
+    <form action="modify" method="post">
+        <input type="hidden" name="storeimage" th:value="${dto.storeimage}">
+        <table border="1" width="600px" align="center">
+            <tr>
+                <th>매장코드</th><td th:text="${dto.storecode}"></td>
+            </tr>
+            <tr>
+                <th>매장명</th><td th:text="${dto.storename}"></td>
+            </tr>
+            <tr>
+                <th>매장주소</th><td th:text="${dto.storeaddress}"></td>
+            </tr>
+            <tr>
+                <th>매장카테고리</th><td th:text="${dto.storecategory}"></td>
+            </tr>
+            <tr>
+                <th>지점</th><td th:text="${dto.storearea}"></td>
+            </tr>
+            <tr>
+                <th>매장이미지</th>
+                <td>
+                    <img th:src="@{'/image/'+${dto.storeimage}}" width="200px" height="150px"
+                         style="border: 1px solid #ccc; border-radius: 8px;">
+                </td>
+            </tr>
+            <tr>
+                <th>상세이미지</th>
+                <td>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 10px;">
+                        <div th:each="img, stat : ${images}">
+                            <div th:if="${stat.index < 4}">
+                                <img th:src="@{'/image/'+${img.id.imageFilename}}"
+                                     style="width: 200px; height: 150px; border: 1px solid #ccc; border-radius: 8px;">
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>주차 가능 여부</th>
+                <!-- radio로 -->
+                <td>
+                    <span th:if="${dto.parking==1}">가능</span>
+                    <span th:unless="${dto.parking==1}">불가능</span>
+                </td>
+            </tr>
+            <tr>
+                <th>위도</th>
+                <td th:text="${dto.latitude}"></td>
+            </tr>
+            <tr>
+                <th>경도</th>
+                <td th:text="${dto.longitude}"></td>
+            </tr>
+            <tr>
+                <th>영업시간</th>
+                <td th:text="${dto.storehours}"></td>
+            </tr>
+        </table>
+        <br>
+        <a th:href="@{/smodify(storecode=${dto.storecode})}"><input type="button" class="buttons1" value="편집"></a>&emsp;
+        <a th:href="@{/sdelete(storecode=${dto.storecode})}"><input type="button" class="buttons1" value="삭제"></a>
+
+
+    </form>
+</section>
+</body>
+</html>

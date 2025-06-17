@@ -1,0 +1,628 @@
+@charset "UTF-8";
+/* Clear floats */
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/* Main sections */
+.ranking_div, .area_div {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* Adjust top margins */
+.ranking_div {
+    margin-top: 50px;
+    margin-bottom: 120px;
+}
+
+
+.ranking_div h2{margin-top: 80px;}
+
+.ranking_div p{
+    margin-bottom: 50px;
+    padding-top: 0px;
+}
+
+.area_div {margin-top: 50px;}
+
+/* Flex container for list items */
+.ListView, .areaListView {
+    width: 1200px;
+    margin: 30px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    text-align: center;
+}
+
+/* Buttons for area selection */
+.areaSelectContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.areaSelectBtn {
+    width: 250px;
+    height: 250px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #fff;
+    background-color: #2b2b2b;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 15px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease, opacity 0.3s ease;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 20px;
+    margin-top: 50px;
+    padding-bottom: 0;
+}
+
+.areaSelectBtn:hover {
+    transform: scale(1.08);
+    opacity: 0.9;
+}
+
+.areaSelectBtn:active, .areaSelectBtn:focus {
+    outline: none;
+    opacity: 0.8;
+}
+
+.main_rankList, .main_areaList {
+    width: 30%;
+    padding: 5px;
+    font-size: 15px;
+    line-height: 1.4em;
+    text-align: center;
+    padding-bottom: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main_rankList:hover, .main_areaList:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+}
+
+.storeimg {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+}
+
+.main_rankList a, .main_areaList a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+    font-size: 25px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.main_rankList a:hover, .main_areaList a:hover {color: #ffdb5a;}
+
+.star-score{
+   margin-bottom: 0;
+   padding-bottom: 0;
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.rating .star-score {
+    margin-top: 8px;
+    font-size: 16px;
+    color: #444;
+}
+
+.rating .stars {
+    display: inline-flex;
+    justify-content: start; /* 별을 왼쪽 정렬 */
+    gap: 4px; /* 별 사이 간격 */
+}
+
+.rating label {
+    font-size: 22px;
+    color: #ccc; /* 기본 별은 회색 */
+}
+
+.rating input {
+    display: none; /* 라디오 버튼은 화면에 보이지 않게 */
+}
+
+.rating label:before {
+    content: "\2605"; /* 별 문자 */
+}
+
+.rating input:checked ~ label {
+    color: #FFD700; /* 선택된 별을 금색으로 표시 */
+}
+
+h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+   position: relative;
+}
+
+/* 나침반 css*/
+/* From Uiverse.io by Nawsome */
+.pl {
+   width: 9.375em;
+   height: 9.375em;
+   margin-bottom: 30px;
+   margin: 30px auto; /* 중앙 정렬 (수평) */
+    display: block; /* 블록 요소로 만들어야 margin auto가 적용됨 */
+    position: relative;
+    margin-bottom: 100px;
+}
+
+.pl__arrows,
+.pl__ring-rotate,
+.pl__ring-stroke,
+.pl__tick {
+   animation-duration: 2s;
+   animation-timing-function: linear;
+   animation-iteration-count: infinite;
+}
+
+.pl__arrows {
+   animation-name: arrows42;
+   transform: rotate(45deg);
+   transform-origin: 16px 52px;
+}
+
+.pl__ring-rotate,
+.pl__ring-stroke {
+   transform-origin: 80px 80px;
+}
+
+.pl__ring-rotate {
+   animation-name: ringRotate42;
+}
+
+.pl__ring-stroke {
+   animation-name: ringStroke42;
+   transform: rotate(-45deg);
+}
+
+.pl__tick {
+   animation-name: tick42;
+}
+
+.pl__tick:nth-child(2) {
+   animation-delay: -1.75s;
+}
+
+.pl__tick:nth-child(3) {
+   animation-delay: -1.5s;
+}
+
+.pl__tick:nth-child(4) {
+   animation-delay: -1.25s;
+}
+
+.pl__tick:nth-child(5) {
+   animation-delay: -1s;
+}
+
+.pl__tick:nth-child(6) {
+   animation-delay: -0.75s;
+}
+
+.pl__tick:nth-child(7) {
+   animation-delay: -0.5s;
+}
+
+.pl__tick:nth-child(8) {
+   animation-delay: -0.25s;
+}
+
+/* Animations */
+@keyframes arrows42 {
+   from {
+      transform: rotate(45deg);
+   }
+
+   to {
+      transform: rotate(405deg);
+   }
+}
+
+@keyframes ringRotate42 {
+   from {
+      transform: rotate(0);
+   }
+
+   to {
+      transform: rotate(720deg);
+   }
+}
+
+@keyframes ringStroke42 {
+   from, to {
+      stroke-dashoffset: 452;
+      transform: rotate(-45deg);
+   }
+
+   50% {
+      stroke-dashoffset: 169.5;
+      transform: rotate(-180deg);
+   }
+}
+
+@keyframes tick42 {
+   from, 3%, 47%, to {
+      stroke-dashoffset: -12;
+   }
+
+   14%, 36% {
+      stroke-dashoffset: 0;
+   }
+}
+
+/*랭킹 애니메이션*/
+.loader {
+   position: relative;
+   width: 75px;
+   height: 100px;
+   margin: 0 auto;
+   margin-top: 100px;
+}
+
+
+.loader__bar {
+   position: absolute;
+   bottom: 0;
+   width: 10px;
+   height: 50%;
+   background: rgb(0, 0, 0);
+   transform-origin: center bottom;
+   box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.loader__bar:nth-child(1) {
+   left: 0px;
+   transform: scale(1, 0.2);
+   -webkit-animation: barUp1 4s infinite;
+   animation: barUp1 4s infinite;
+}
+
+.loader__bar:nth-child(2) {
+   left: 15px;
+   transform: scale(1, 0.4);
+   -webkit-animation: barUp2 4s infinite;
+   animation: barUp2 4s infinite;
+}
+
+.loader__bar:nth-child(3) {
+   left: 30px;
+   transform: scale(1, 0.6);
+   -webkit-animation: barUp3 4s infinite;
+   animation: barUp3 4s infinite;
+}
+
+.loader__bar:nth-child(4) {
+   left: 45px;
+   transform: scale(1, 0.8);
+   -webkit-animation: barUp4 4s infinite;
+   animation: barUp4 4s infinite;
+}
+
+.loader__bar:nth-child(5) {
+   left: 60px;
+   transform: scale(1, 1);
+   -webkit-animation: barUp5 4s infinite;
+   animation: barUp5 4s infinite;
+}
+
+.loader__ball {
+   position: absolute;
+   bottom: 10px;
+   left: 0;
+   width: 10px;
+   height: 10px;
+   background: rgb(44, 143, 255);
+   border-radius: 50%;
+   -webkit-animation: ball624 4s infinite;
+   animation: ball624 4s infinite;
+}
+
+@keyframes ball624 {
+   0% {
+      transform: translate(0, 0);
+   }
+
+   5% {
+      transform: translate(8px, -14px);
+   }
+
+   10% {
+      transform: translate(15px, -10px);
+   }
+
+   17% {
+      transform: translate(23px, -24px);
+   }
+
+   20% {
+      transform: translate(30px, -20px);
+   }
+
+   27% {
+      transform: translate(38px, -34px);
+   }
+
+   30% {
+      transform: translate(45px, -30px);
+   }
+
+   37% {
+      transform: translate(53px, -44px);
+   }
+
+   40% {
+      transform: translate(60px, -40px);
+   }
+
+   50% {
+      transform: translate(60px, 0);
+   }
+
+   57% {
+      transform: translate(53px, -14px);
+   }
+
+   60% {
+      transform: translate(45px, -10px);
+   }
+
+   67% {
+      transform: translate(37px, -24px);
+   }
+
+   70% {
+      transform: translate(30px, -20px);
+   }
+
+   77% {
+      transform: translate(22px, -34px);
+   }
+
+   80% {
+      transform: translate(15px, -30px);
+   }
+
+   87% {
+      transform: translate(7px, -44px);
+   }
+
+   90% {
+      transform: translate(0, -40px);
+   }
+
+   100% {
+      transform: translate(0, 0);
+   }
+}
+
+@-webkit-keyframes barUp1 {
+   0% {
+      transform: scale(1, 0.2);
+   }
+
+   40% {
+      transform: scale(1, 0.2);
+   }
+
+   50% {
+      transform: scale(1, 1);
+   }
+
+   90% {
+      transform: scale(1, 1);
+   }
+
+   100% {
+      transform: scale(1, 0.2);
+   }
+}
+
+@keyframes barUp1 {
+   0% {
+      transform: scale(1, 0.2);
+   }
+
+   40% {
+      transform: scale(1, 0.2);
+   }
+
+   50% {
+      transform: scale(1, 1);
+   }
+
+   90% {
+      transform: scale(1, 1);
+   }
+
+   100% {
+      transform: scale(1, 0.2);
+   }
+}
+
+@-webkit-keyframes barUp2 {
+   0% {
+      transform: scale(1, 0.4);
+   }
+
+   40% {
+      transform: scale(1, 0.4);
+   }
+
+   50% {
+      transform: scale(1, 0.8);
+   }
+
+   90% {
+      transform: scale(1, 0.8);
+   }
+
+   100% {
+      transform: scale(1, 0.4);
+   }
+}
+
+@keyframes barUp2 {
+   0% {
+      transform: scale(1, 0.4);
+   }
+
+   40% {
+      transform: scale(1, 0.4);
+   }
+
+   50% {
+      transform: scale(1, 0.8);
+   }
+
+   90% {
+      transform: scale(1, 0.8);
+   }
+
+   100% {
+      transform: scale(1, 0.4);
+   }
+}
+
+@-webkit-keyframes barUp3 {
+   0% {
+      transform: scale(1, 0.6);
+   }
+
+   100% {
+      transform: scale(1, 0.6);
+   }
+}
+
+@keyframes barUp3 {
+   0% {
+      transform: scale(1, 0.6);
+   }
+
+   100% {
+      transform: scale(1, 0.6);
+   }
+}
+
+@-webkit-keyframes barUp4 {
+   0% {
+      transform: scale(1, 0.8);
+   }
+
+   40% {
+      transform: scale(1, 0.8);
+   }
+
+   50% {
+      transform: scale(1, 0.4);
+   }
+
+   90% {
+      transform: scale(1, 0.4);
+   }
+
+   100% {
+      transform: scale(1, 0.8);
+   }
+}
+
+@keyframes barUp4 {
+   0% {
+      transform: scale(1, 0.8);
+   }
+
+   40% {
+      transform: scale(1, 0.8);
+   }
+
+   50% {
+      transform: scale(1, 0.4);
+   }
+
+   90% {
+      transform: scale(1, 0.4);
+   }
+
+   100% {
+      transform: scale(1, 0.8);
+   }
+}
+
+@-webkit-keyframes barUp5 {
+   0% {
+      transform: scale(1, 1);
+   }
+
+   40% {
+      transform: scale(1, 1);
+   }
+
+   50% {
+      transform: scale(1, 0.2);
+   }
+
+   90% {
+      transform: scale(1, 0.2);
+   }
+
+   100% {
+      transform: scale(1, 1);
+   }
+}
+
+@keyframes barUp5 {
+   0% {
+      transform: scale(1, 1);
+   }
+
+   40% {
+      transform: scale(1, 1);
+   }
+
+   50% {
+      transform: scale(1, 0.2);
+   }
+
+   90% {
+      transform: scale(1, 0.2);
+   }
+
+   100% {
+      transform: scale(1, 1);
+   }
+}

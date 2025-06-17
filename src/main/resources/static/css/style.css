@@ -1,0 +1,167 @@
+@charset "UTF-8";
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.sidebar-header h3 {
+  color: white;
+  text-align: center;
+  margin-top: 60px;
+}
+
+/* 메뉴 기본 스타일 */
+.menu {
+  list-style: none;
+  padding: 0;
+}
+
+.menu li {
+  margin-bottom: 10px;
+}
+
+.menu a, .menu-toggle {
+  color: white;
+  text-decoration: none;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 10px 30px;
+  display: block;
+  cursor: pointer;
+}
+
+.menu-toggle:hover, .menu a:hover {
+  background-color: #fee9a4;
+}
+
+.submenu {
+  display: none;
+  padding-left: 20px;
+  list-style: none;
+}
+
+#toggleSidebarBtn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  color: black;
+  border: none;
+  cursor: pointer;
+  z-index: 3000;
+  font-weight: bold;
+}
+
+.sidebar.hidden {
+  left: -250px;
+}
+ 
+.login {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+.login a {
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+/* 햄버거 아이콘 */
+.icon-menu {
+	--gap: 5px;
+	--height-bar: 2.5px;
+	--pos-y-bar-one: 0;
+	--pos-y-bar-three: 0;
+	--scale-bar: 1;
+	--rotate-bar-one: 0;
+	--rotate-bar-three: 0;
+	width: 25px;
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap);
+	cursor: pointer;
+	position: relative;
+	z-index: 2000;
+}
+
+.bar {
+     position: relative;
+     height: var(--height-bar);
+     width: 100%;
+     border-radius: .5rem;
+     background-color: #e9c110;
+}
+
+.bar--1 {
+     top: var(--pos-y-bar-one);
+     transform: rotate(var(--rotate-bar-one));
+     transition: top 200ms 100ms, transform 100ms;
+}
+
+.bar--2 {
+     transform: scaleX(var(--scale-bar));
+     transition: transform 150ms 100ms;
+}
+
+.bar--3 {
+     bottom: var(--pos-y-bar-three);
+     transform: rotate(var(--rotate-bar-three));
+     transition: bottom 200ms 100ms, transform 100ms;
+}
+
+.check-icon:checked + .icon-menu {
+	/* 변경된 상태에서 메뉴 아이콘이 사라지지 않도록 설정 */
+	display: flex; /* ← 이거로 항상 보이게 */
+}
+
+.check-icon:checked + .icon-menu > .bar--1 {
+	transition: top 200ms, transform 200ms 100ms;
+	background-color: white;
+}
+
+.check-icon:checked + .icon-menu > .bar--3 {
+	transition: bottom 200ms, transform 200ms 100ms;
+	background-color: white;
+}
+
+.check-icon:checked + .icon-menu {
+	--pos-y-bar-one: calc(var(--gap) + var(--height-bar));
+	--pos-y-bar-three: calc(var(--gap) + var(--height-bar));
+	--scale-bar: 0;
+	--rotate-bar-one: 45deg;
+	--rotate-bar-three: -45deg;
+}
+
+/* 사이드바 기본 숨김 위치 */
+#sidebar {
+	position: fixed;
+	top: 0;
+	left: -300px; /* 숨겨진 상태 */
+	width: 250px;
+	height: 100%;
+	background-color: #FCB97D;
+	color: white;
+	transition: left 0.3s ease; /* 부드러운 이동 효과 */
+	z-index: 1000;
+	overflow-y: auto;
+	border-top-right-radius: 20px;
+}
+
+/* 체크박스가 체크될 때 사이드바를 보이게 */
+.check-icon:checked ~ #sidebar {
+	left: 0; /* 사이드바가 보이게 설정 */
+}
+
+.submenu.open {
+	display: block; /* .open 클래스가 있을 때 서브메뉴 보이게 설정 */
+}
+.pagination ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;        /* 가로 방향 배치 */
+    gap: 10px;            /* 아이템 사이 간격 */
+    justify-content: center; /* 중앙 정렬 (선택사항) */
+    margin-bottom: 50px;
+}

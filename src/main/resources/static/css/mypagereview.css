@@ -1,0 +1,94 @@
+.div-container {
+	margin-top: 30px;
+	display: flex;
+	width: 90%;
+}
+
+h2 {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.no-review {
+	text-align: center;
+	color: gray;
+	padding: 50px;
+}
+
+.container {
+	width: 70%;
+	padding: 30px;
+	margin-left: 20px;
+	margin-bottom: 10px;
+	border-radius: 10px;
+	margin-top: -70px;
+}
+
+table {
+	width: 90%;
+	margin-left:90px;
+	border-collapse: collapse;
+	font-size: 15px;
+}
+
+thead {
+	border-bottom: 2px solid #ED751C;
+	background-color: #fff4ea;
+}
+
+th {
+	padding: 15px 10px;
+	text-align: center;
+	color: #ED751C;
+	font-weight: bold;
+	background-color: white;
+	font-size: 16px;
+}
+
+td {
+	padding: 14px 10px;
+	text-align: center;
+	color: #333;
+	border-bottom: 1px solid #eee;
+	background-color: white;
+}
+
+.stars {
+	color: #ED751C;
+	font-size: 17px;
+}
+
+.store-name a {
+  color: #ED751C;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+
+.review-title {
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+
+.review-title a {
+	color: #0056cc;
+	text-decoration: none;
+}
+
+.review-title a:hover {
+	text-decoration: underline;
+}
+
+
+.slink {
+    text-decoration: none;
+    cursor: pointer; /* 클릭 가능 표시 */
+    font-weight: bold; /* 살짝 강조 */
+}
+
+.slink:hover {
+    color: #ED751C; /* 호버 시 색상 변경 */
+    text-decoration: underline; /* 호버 시 밑줄 */
+}

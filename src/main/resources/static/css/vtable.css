@@ -1,0 +1,144 @@
+@charset "UTF-8";
+
+table {
+	border: 1px solid #eee;
+	border-collapse: collapse;
+	background-color: #fff;
+	margin: 10px auto;
+}
+th, td {
+	padding: 10px;
+	border: 1px solid #eee;
+	text-overflow: ellipsis;
+}
+th {
+	border-left: 2px solid #ED751C;
+	color: #ED751C;
+	width: 120px;
+}
+td {
+	text-align: left;
+}
+textarea {
+	padding: 7px 10px;
+	resize: none;
+	float: left;
+	margin-left: 20px;
+	outline: none;
+}
+textarea:hover {
+	cursor: text;
+}
+textarea:focus {
+	cursor: text;
+	border: 2px solid #ED751C;
+	border-radius: 3px;
+	padding: 7px 10px;
+}
+
+input[type=text] {
+	width: 305px;
+	border: 1px solid #777;
+	border-radius: 3px;
+	margin-left: 20px;
+	margin-right: 20px;
+	padding: 5px;
+	outline: none;
+}
+input[type=text]:hover {
+	cursor: text;
+	border: 1px solid #666;
+	border-radius: 3px;
+	padding: 5px;
+	box-shadow: none;
+}
+input[type=text]:focus, input[type=text]:active {
+	border: 2px solid #ED751C;
+	border-radius: 3px;
+	padding: 5px;
+}
+input[type=submit], input[type=button], input[type=reset],
+button[type=submit], button[type=button], button[type=reset] {
+	color: #fff;
+	background-color: #ED751C;
+	font-weight: bold;
+	width: 100px;
+	height: 30px;
+	border: none;
+	border-radius: 5px;
+	margin: 5px 15px;
+}
+input[type=submit]:hover, input[type=button]:hover, input[type=reset]:hover,
+button[type=submit]:hover, button[type=button]:hover, button[type=reset]:hover {
+	cursor: pointer;
+}
+input[type=submit]:active, input[type=button]:active, input[type=reset]:active,
+button[type=submit]:active, button[type=button]:active, button[type=reset]:active {
+	background-color: #ca6210;
+}
+/* 기본 input[type="file"] 스타일 숨기기 */
+#storeimage {
+  display: none;
+}
+
+.file-input {
+  display: none;
+}
+
+/* 커스터마이즈한 파일 선택 버튼 */
+.plusButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: #e5e7eb;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.plusButton:hover .plusIcon {
+  transform: rotate(90deg);
+}
+
+.plusIcon {
+  fill: #4b5563;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s, fill 0.3s;
+}
+
+
+.file-name {
+  margin-left: 10px; /* 버튼과 파일 이름 간격 */
+  font-size: 14px;
+  color: #555; /* 파일 이름 색상 */
+}
+
+.minusButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: #fecaca; /* 연한 빨강 */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.minusButton:hover .minusIcon {
+  transform: rotate(-90deg);
+}
+
+.minusIcon {
+  fill: #b91c1c; /* 진한 빨강 */
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s, fill 0.3s;
+}
+
+.minusButton:active .minusIcon {
+  fill: #7f1d1d; /* 더 진한 빨강 */
+}

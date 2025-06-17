@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+    <link rel="stylesheet" th:href="@{/css/mypagebook.css}">
+    <link rel="stylesheet" th:href="@{/css/mypagemenu.css}">
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="div-container">
+        <!-- 왼쪽 메뉴바 -->
+        <div class="category">
+            <h1>마이페이지</h1>
+            <nav>
+                <ul>
+                    <li><a th:href="@{/mypinfo}" class="menulink">회원정보 수정</a></li>
+                    <li><a th:href="@{/mypagebook}" class="menulink active">예약내역</a></li>
+                    <li><a th:href="@{/mypagereview}" class="menulink">작성한 리뷰</a></li>
+                    <li><a th:href="@{/mypagedel}" class="menulink">회원탈퇴</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- 예약내역 내용 -->
+        <div class="container">
+            <h2>예약내역</h2>
+            <br>
+
+            <div th:if="${#lists.isEmpty(mybook)}">
+                <div class="no-book">예약내역이 없습니다.</div>
+            </div>
+
+            <div th:if="${!#lists.isEmpty(mybook)}">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>매장명</th>
+                        <th>인원수</th>
+                        <th>예약상태</th>
+                        <th>날짜</th>
+                        <th>시간</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="book : ${mybook}">
+                        <td class="store-name">
+                            <a th:href="@{/detailview(storecode=${book.STORECODE})}" class="slink"
+                               th:text="${book.STORENAME}">매장명</a>
+                        </td>
+                        <td th:text="${book.SARAMSU}">0</td>
+                        <td th:text="${book.STATE}">상태</td>
+                        <td th:text="${#dates.format(book.BOOKINGDATE, 'yyyy-MM-dd')}">날짜</td>
+                        <td th:text="${book.BOOKINGTIME}">시간</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<br>
+    <!-- 블록 페이징 영역 -->
+    <div class="pagination" th:if="${totalPage > 1}">
+        <ul style="display: flex; list-style: none; gap: 10px; justify-content: center; padding: 0;">
+
+            <!-- 이전 블록 -->
+            <li th:if="${nowPageBlock > 0}">
+                <a th:href="@{/mypagebook(page=${(nowPageBlock - 1) * pageBlockSize})}">&laquo; 이전</a>
+            </li>
+
+            <!-- 현재 블록의 페이지 번호들 -->
+            <li th:each="pageNum : ${#numbers.sequence(nowPageBlock * pageBlockSize, T(java.lang.Math).min((nowPageBlock + 1) * pageBlockSize - 1, totalPage - 1))}">
+                <span th:if="${pageNum == nowpage}" style="font-weight: bold; color: red;" th:text="${pageNum + 1}"></span>
+                <a th:if="${pageNum != nowpage}" th:href="@{/mypagebook(page=${pageNum})}" th:text="${pageNum + 1}"></a>
+            </li>
+
+            <!-- 다음 블록 -->
+            <li th:if="${(nowPageBlock + 1) * pageBlockSize < totalPage}">
+                <a th:href="@{/mypagebook(page=${(nowPageBlock + 1) * pageBlockSize})}">다음 &raquo;</a>
+            </li>
+        </ul>
+    </div>
+
+</section>
+
+</body>
+</html>

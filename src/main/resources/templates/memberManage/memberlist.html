@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <link rel="stylesheet" th:href="@{/css/htable.css}">
+    <link rel="stylesheet" th:href="@{/css/search.css}">
+</head>
+<body style="padding-top: 0">
+<section layout:fragment="content">
+
+    <script src="/js/member.js"></script>
+
+
+    <!-- -----------회원검색창----------------- -->
+    <body>
+    <h1>회원목록창</h1>
+
+    <!-- 검색버튼 수정 -->
+    <div class="input_div" style="text-align: center; margin-bottom: 20px;">
+        <button type="button" class="button" onclick="openSearchModal()">회원검색</button>
+    </div>
+
+    <!-- 검색 모달창 -->
+    <div id="searchModal" style="display:none; position:fixed; top:20%; left: 31%; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000;">
+        <form id="memberSearchForm" onsubmit="return false;">
+            <select name="searchKey" id="searchKey">
+                <option value="id">아이디</option>
+                <option value="name">이름</option>
+            </select>
+            <input type="text" name="searchValue" id="searchValue" placeholder="검색어 입력">
+            <button type="button" onclick="MemberSearch()">검색</button>
+            <button type="button" onclick="closeSearchModal()">닫기</button>
+        </form>
+        <div id="searchResult"></div>
+    </div>
+
+    <!--  삭제 모달 창  -->
+    <div id="deleteModal" style="display:none; position:fixed; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); z-index:9999;">
+        <div style="background:#fff; width:300px; margin:200px auto; padding:20px; border-radius:8px; text-align:center;">
+            <p>정말 삭제하시겠습니까?</p>
+            <button type="button" id="deleteYesBtn">예</button>
+            <button type="button" id="deleteNoBtn">취소</button>
+        </div>
+    </div>
+
+
+    <!--   성공오류메시지 표시   -->
+    <div th:if="${!#strings.isEmpty(errorMessage)}">
+        <p style="color: red; text-align: center;" th:text="${errorMessage}"></p>
+    </div>
+
+
+    <div>
+        <table width="700px">
+            <thead>
+            <tr>
+                <th>회원아이디</th>
+                <th>회원이름</th>
+                <th>회원연락처</th>
+                <th>생년월일</th>
+                <th colspan="2">회원관리</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${#lists.isEmpty(memberList)}">
+                <td colspan="6">등록된 회원이 없습니다.</td>
+            </tr>
+
+            <tr th:each="member : ${memberList}">
+                <td class="align_center" th:text="${member.id}"></td>
+                <td class="align_center" th:text="${member.name}"></td>
+                <td class="align_center" th:text="${member.phone}"></td>
+                <td class="align_center" th:text="${#dates.format(member.birth, 'yyyy-MM-dd')}"></td>
+
+                <td class="align_center">
+                    <a th:href="@{/memberedit(id=${member.id})}" class="editBtn">수정</a>
+                </td>
+
+                <td class="align_center">
+                    <form th:action="@{/memberdelete}" method="post" class="deleteForm" style="display:inline;">
+                        <input type="hidden" name="id" th:value="${member.id}">
+                        <button type="button" class="deleteBtn">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br><br>
+
+    <!-- 페이징 처리부분 -->
+    <div th:if="${memberList != null}" style="align-items: center; line-height: 2em;">
+        <div class="pagination">
+            <ul style="display: flex; list-style: none; gap: 10px;">
+                <!-- 이전 블록 -->
+                <li th:if="${nowPageBlock > 0}">
+                    <a th:href="@{/members(page=${(nowPageBlock - 1) * pageBlockSize})}">이전</a>
+                </li>
+
+                <li th:each="pageNum : ${#numbers.sequence(nowPageBlock * pageBlockSize, T(java.lang.Math).min((nowPageBlock + 1) * pageBlockSize - 1, totalPage - 1))}">
+                    <a th:if="${pageNum != nowpage}"
+                       th:href="@{/members(page=${pageNum})}"
+                       th:text="${pageNum + 1}"></a>
+                    <span th:if="${pageNum == nowpage}"
+                          style="font-weight: bold; color: red;"
+                          th:text="${pageNum + 1}"></span>
+                </li>
+
+
+                <!-- 다음 블록 -->
+                <li th:if="${(nowPageBlock + 1) * pageBlockSize < totalPage}">
+                    <a th:href="@{/members(page=${(nowPageBlock + 1) * pageBlockSize})}">다음</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+</body>
+</html>

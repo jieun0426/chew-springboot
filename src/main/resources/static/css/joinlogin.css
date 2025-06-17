@@ -1,0 +1,201 @@
+@charset "UTF-8";
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 2em;
+    background-color: #fff8e1;
+    border-radius: 25px;
+    width: 500px; /* ⬅️ 폼 너비 늘림 */
+    margin: 50px auto;
+}
+
+#heading {
+    text-align: center;
+    margin-bottom: 1em;
+    color: #333;
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+.required-label {
+    font-size: 0.95em;
+    color: #333;
+    font-weight: 500;
+    margin: 5px 0 2px 5px;
+}
+
+.required {
+    color: red;
+    font-weight: bold;
+}
+
+.field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 오류 메시지 빨간색 아래에 표시 */
+.field-error {
+    color: red;
+    margin-top: 4px;
+    font-size: 0.9em;
+    font-weight: 600;
+    display: block;
+    clear: both;
+}
+
+
+.input-field,
+select {
+    flex: 1;
+    padding: 14px; /* 약간 높임 */
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+/* ✅ 회원가입/취소 버튼: 입력폼 너비에 맞춤 */
+.button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    font-weight: bold;
+    background-color: #FFD732;
+    color: #000;
+    cursor: pointer;
+}
+
+/* ✅ 중복확인 버튼: 높이는 입력창과 같게, 너비는 작게 */
+.id-check-btn {
+    padding: 12px 15px;
+    height: 70%; /* 높이 맞추기 */
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 0.95em;
+    font-weight: bold;
+    background-color: #FFD732;
+    color: #000;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* Hover 효과 */
+.id-check-btn:hover,
+.button:hover {
+    background-color: #ffc400;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 1em;
+}
+
+.links {
+      font-size: 15px;
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+    body, div, span, a, h3, .snslogin-divider span {
+      user-select: none;
+    }
+    .links a {
+      text-decoration: none;
+      color: #6a1b9a;
+      font-weight: bold;
+      margin: 0 5px;
+      outline: none;
+      cursor: pointer;
+    }
+    .links a:hover {
+      color: #2698cb;
+    }
+    .snslogin-wrapper {
+      width: 100%;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .snslogin-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .snslogin-divider::before,
+    .snslogin-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: #D4B229;
+      margin: 0 10px;
+    }
+    .snslogin-divider span {
+      font-size: 13px;
+      font-weight: bold;
+      color: #333;
+    }
+    .sns-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        max-width: 500px;  /* form과 동일한 너비 */
+        margin: 0 auto;
+        align-items: stretch; /* 버튼 너비 전체로 */
+    }
+
+    .sns-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        height: 50px; /* 폼 입력창과 비슷한 높이 */
+        padding: 0 16px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        box-sizing: border-box;
+        position: relative;
+        text-decoration: none !important;
+        width: 100%; /* 입력창과 동일한 너비로 맞춤 */
+    }
+
+    .sns-btn img {
+        position: absolute;
+        left: 16px;
+        width: 24px;
+        height: 24px;
+    }
+    .sns-kakao {
+      background-color: #FEE500;
+      color: #3C1E1E;
+    }
+    .sns-kakao:hover {
+      background-color: #e6c200;
+    }
+    .sns-naver {
+      background-color: #00B818;
+      color: white;
+    }
+    .sns-naver:hover {
+      background-color: #00AD17;
+    }
+    .sns-google {
+      background-color: #F4FFFF;
+      color: black;
+    }
+    .sns-google:hover {
+      background-color: #E0EBEB;
+    }
+

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <style>
+    /* 현재 페이지 번호 강조용 CSS */
+    .pagination a.current {
+      font-weight: bold;
+      text-decoration: underline;
+      color: #FF6600;
+    }
+    .pagination a:hover {
+      color: #FF3300;
+    }
+  </style>
+
+  <meta charset="UTF-8">
+  <title>최고의 식당을 찾아보세요</title>
+  <link rel="stylesheet" th:href="@{/css/detailmain.css}">
+</head>
+<body>
+<section layout:fragment="content">
+<div class="container1">
+  <h1>최고의 식당을 찾아보세요</h1>
+  <form th:action="@{/detailmain_search}" method="post">
+    <div class="ui-input-container">
+      <input name="search" required
+             placeholder="검색할 매장명이나 주소를 입력하세요..."
+             class="ui-input" type="text"/>
+      <div class="ui-input-underline"></div>
+      <div class="ui-input-highlight"></div>
+      <div class="ui-input-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2"
+                stroke="currentColor"
+                d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"/>
+        </svg>
+      </div>
+    </div>
+  </form>
+
+  <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
+    <div class="wheel"></div>
+    <div class="hamster">
+      <div class="hamster__body">
+        <div class="hamster__head">
+          <div class="hamster__ear"></div>
+          <div class="hamster__eye"></div>
+          <div class="hamster__nose"></div>
+        </div>
+        <div class="hamster__limb hamster__limb--fr"></div>
+        <div class="hamster__limb hamster__limb--fl"></div>
+        <div class="hamster__limb hamster__limb--br"></div>
+        <div class="hamster__limb hamster__limb--bl"></div>
+        <div class="hamster__tail"></div>
+      </div>
+    </div>
+    <div class="spoke"></div>
+  </div>
+</div>
+
+<div id="container2" class="container2">
+  <h2><a th:href="@{/detailmain} + '#container2'">추천 음식점 전체보기</a></h2>
+
+  <div th:if="${search != null}">
+    <div th:if="${count > 0}">
+      <p style="margin-bottom: 30px;">'<span style="font-weight: bold;" th:text="${search}"></span>' 검색 결과 (<span th:text="${count}"></span>건)</p>
+    </div>
+    <div th:if="${count == 0}" class="nolist">
+      '<span style="font-weight: bold;" th:text="${search}"></span>' 검색 결과가 없습니다&emsp;
+      <button type="button" id="detailmainBtn" th:onclick="'location.href=\'/detailmain#container2\''">추천 메인으로</button>
+    </div>
+  </div>
+
+  <div class="restaurant-grid">
+    <div th:each="r : ${list}" class="restaurant-card">
+      <a th:href="@{/detailview(storecode=${r.storecode})}" class="restaurant-card-link">
+        <img th:src="@{'/image/' + ${r.storeimage}}">
+        <div class="restaurant-info">
+          <div class="restaurant-name" th:text="${r.storename}"></div>
+          <div class="storecategory" th:text="${r.storecategory}"></div>
+          <div class="storeaddress" th:text="${r.storeaddress}"></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="pagination" style="text-align: center; margin: 30px;">
+  <!-- 이전 페이지 링크 -->
+  <a th:if="${pdto.nowPage > 1}"
+     th:href="${search != null} ? @{/detailmain_search(nowPage=${pdto.nowPage - 1}, search=${search})} : @{/detailmain(nowPage=${pdto.nowPage - 1})}">이전</a>
+
+  <!-- 페이지 번호 반복 -->
+  <span th:each="i : ${#numbers.sequence(1, pdto.totalPages)}">
+  <a th:href="${search != null} ? @{/detailmain_search(nowPage=${i}, search=${search})} : @{/detailmain(nowPage=${i})}"
+     th:text="${i}"
+     th:classappend="${i == pdto.nowPage} ? 'current' : ''"
+     style="margin: 0 5px; text-decoration: none; color: black;"></a>
+</span>
+
+  <!-- 다음 페이지 링크 -->
+  <a th:if="${pdto.nowPage < pdto.totalPages}"
+     th:href="${search != null} ? @{/detailmain_search(nowPage=${pdto.nowPage + 1}, search=${search})} : @{/detailmain(nowPage=${pdto.nowPage + 1})}">다음</a>
+
+</div>
+
+<!--<p th:text="'Total Pages: ' + ${pdto.totalPages}"></p>  &lt;!&ndash;없으면 렌더링 잘 안됨 왜지 &ndash;&gt;-->
+
+
+</section>
+</body>
+</html>

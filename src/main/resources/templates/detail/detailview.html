@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <title th:text="${ddto.storename}">가게 이름</title>
+    <link rel="stylesheet" th:href="@{/css/detailview.css}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script th:src="@{/js/imagelist.js}"></script>
+    <script th:src="@{/js/reviewshowedit.js}"></script>
+    <script th:src="@{/js/detailbook.js}"></script>
+    <script th:inline="javascript">
+        const storecode = [[${ddto.storecode}]];
+    </script>
+</head>
+<body>
+<section layout:fragment="content">
+    <header class="top-nav">
+        <nav>
+            <ul>
+                <li><a href="#home">홈</a></li>
+                <li><a href="#location">오시는길</a></li>
+                <li><a href="#reviews">리뷰</a></li>
+                <li><a href="#" id="openModalBtn">예약하기</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container1">
+        <div class="restaurant-header" id="home">
+            <img th:src="@{/image/{image}(image=${ddto.storeimage})}" alt="레스토랑 사진">
+            <div class="restaurant-info">
+                <div class="title"><h1 th:text="${ddto.storename}">가게이름</h1></div>
+                <div class="stars">
+                    <span th:each="i : ${#numbers.sequence(1, filledStars)}">★</span><span th:if="${emptyStars > 0}" th:each="i : ${#numbers.sequence(1, emptyStars)}">☆</span>
+
+                    (<span th:text="${avgStars}">0</span>)
+                </div>
+
+                <div class="item">
+                    <span class="time">🍴 <span th:text="${ddto.storecategory}"></span></span>
+                    <span class="category">🕒 <span th:text="${ddto.storehours}"></span></span>
+                </div>
+            </div>
+
+            <div class="like-button">
+                <input type="hidden" id="memberId" th:value="${#authentication.name}" />
+                <input class="on" id="heart" type="checkbox" />
+                <label class="like" for="heart">
+                    <svg class="like-icon" fill-rule="nonzero" viewBox="0 0 24 24">
+                        <path
+                                d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"
+                        ></path>
+                    </svg>
+                    <span class="like-text">Likes</span>
+                </label>
+                <span class="like-count" id="likeCount" th:text="${ddto.storelikes}">0</span>
+            </div>
+            <input type="hidden" id="storecode" th:value="${ddto.storecode}" />
+            <!-- jQuery 먼저 로드 -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+            <!-- contextPath Thymeleaf로 전역 변수 전달 -->
+            <script th:inline="javascript">
+                const contextPath = [[@{/}]];
+            </script>
+
+            <!-- 외부 JS include -->
+            <script th:src="@{/js/likeToggle.js}"></script>
+        </div>
+    </div>
+
+    <div class="container2">
+        <div class="card">
+            <div class="cardWrap">
+                <ul id="imageList">
+                    <li th:each="image : ${imagelist}">
+                        <img th:src="@{/image/{file}(file=${image.image_filename})}" alt="Store Image" class="clickable-img">
+                    </li>
+                </ul>
+            </div>
+            <button class="prev"><i class='bx bxs-chevron-left'></i></button>
+            <button class="next"><i class='bx bxs-chevron-right'></i></button>
+
+            <!-- 모달 -->
+            <div id="imageModal" class="modal">
+                <span class="close">&times;</span>
+                <img class="modal-content" id="modalImage">
+
+            </div>
+        </div>
+
+        <div class="location-section" id="location">
+            <h2>위치</h2>
+            <div class="map-wrapper">
+                <div id="map" th:data-lat="${ddto.latitude}" th:data-lng="${ddto.longitude}"></div>
+                <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cc847f687b096a45e3012f1089780b4f"></script>
+                <script src="/js/map.js"></script>
+                <div class="address-box">
+                    <h5 th:text="${ddto.storeaddress}">주소</h5>
+                    <p th:if="${ddto.parking == 1}">🅿️주차 가능✅</p>
+                    <p th:if="${ddto.parking != 1}">🅿️주차 불가🚫</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container3">
+
+        <!-- 로그인한 경우에만 리뷰 작성 폼 표시 -->
+        <div sec:authorize ="isAuthenticated()">
+            <div class="review-form" style="margin-top: 30px;">
+                <form th:action="@{/review/submit}" method="post" class="review_form">
+                    <h3>리뷰 작성하기</h3>
+                    <p>식사는 만족스러우셨나요?</p>
+
+                    <!-- 가게 코드 -->
+                    <input type="hidden" name="storecode" th:value="${ddto.storecode}" />
+
+                    <!-- 별점 선택 -->
+                    <div style="text-align: center;">
+                        <div class="rating" style="display: inline-block;">
+                            <input value="5" name="stars" id="star5" type="radio">
+                            <label title="5점" for="star5"></label>
+                            <input value="4" name="stars" id="star4" type="radio">
+                            <label title="4점" for="star4"></label>
+                            <input value="3" name="stars" id="star3" type="radio" checked>
+                            <label title="3점" for="star3"></label>
+                            <input value="2" name="stars" id="star2" type="radio">
+                            <label title="2점" for="star2"></label>
+                            <input value="1" name="stars" id="star1" type="radio">
+                            <label title="1점" for="star1"></label>
+                        </div>
+                    </div>
+
+                    <!-- 제목 -->
+                    <input type="text" name="title" class="review_title" placeholder="리뷰 제목을 입력해주세요" required>
+
+                    <!-- 내용 -->
+                    <textarea class="star_box" name="content" placeholder="리뷰를 작성해주세요" required></textarea>
+
+                    <!-- 등록 버튼 -->
+                    <button type="submit" class="btn02"
+                            style="display: block; margin: 0 auto; margin-bottom: 100px; width: 400px;">
+                        리뷰 등록하기
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 비로그인 상태에서는 안내 문구만 -->
+        <div sec:authorize ="isAnonymous()">
+            <div class="review_logout_box" style="text-align: center; margin-top: 40px;">
+                <p>리뷰 작성은
+                    <a th:href="@{/loginput}"
+                       style="color: blue; text-decoration: underline; font-weight: bold;">
+                        로그인
+                    </a>이 필요합니다.
+                </p>
+            </div>
+        </div>
+
+        <!-- 리뷰 리스트 -->
+        <div class="review-section" id="reviews" style="padding-top: 50px;">
+            <h2>리뷰</h2>
+            <div th:each="r : ${reviews}">
+                <div th:with="reviewKey=${r.store.storecode} + '_' + ${r.id.id}">
+                    <div class="review" th:id="'review-' + ${reviewKey}">
+
+                        <!-- 리뷰 표시 영역 -->
+                        <div th:id="'review-display-' + ${reviewKey}">
+                            <div class="review-header">
+                                <span class="review-avatar-emoji">👤</span>
+                                <span class="review-id" th:text="${r.id.id}">아이디</span>
+                            </div>
+
+                            <div class="review-stars"
+                                 th:with="safeStars=${T(java.lang.Math).min(5, r.stars.intValue())}">
+
+                                <span th:each="i : ${#numbers.sequence(1, safeStars)}">★</span><span th:if="${safeStars < 5}" th:each="i : ${#numbers.sequence(1, 5 - safeStars)}">☆</span>
+                            </div>
+
+                            <div class="review-title" th:text="${r.title}">제목</div>
+                            <div class="review-content" th:text="${r.content}">내용</div>
+
+                            <div class="review-buttons"
+                                 th:if="${#authentication.authenticated} and ${r.id.id} == ${#authentication.name}">
+                                <button
+                                        type="button"
+                                        class="edit-button"
+                                        th:attr="data-id=${r.id.id},
+                                             data-storecode=${r.store.storecode},
+                                             data-title=${r.title},
+                                             data-content=${r.content},
+                                             data-stars=${r.stars}">
+                                    수정
+                                </button>
+                                <span class="divider">|</span>
+                                <form action="/review/deleteReview" method="post" class="review-btn-form" onsubmit="return confirmDelete();">
+                                    <input type="hidden" name="id" th:value="${r.id.id}">
+                                    <input type="hidden" name="storecode" th:value="${r.store.storecode}">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                    <button type="submit" class="btn cancel">삭제</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ////// 예약 모달 ////// -->
+        <div id="bookingModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h4>예약하기</h4>
+                <form id="bookingForm">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                    <input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>
+                    <input type="hidden" name="storecode" th:value="${ddto.storecode}"/>
+
+                    <!-- 인원수 선택 -->
+                    <label>인원수:</label>
+                    <div class="people-buttons" id="personOptions">
+                        <button type="button" data-value="1" class="people-btn">1명</button>
+                        <button type="button" data-value="2" class="people-btn">2명</button>
+                        <button type="button" data-value="3" class="people-btn">3명</button>
+                        <button type="button" data-value="4" class="people-btn">4명</button>
+                        <button type="button" data-value="5" class="people-btn">5명</button>
+                        <button type="button" data-value="6" class="people-btn">6명</button>
+                        <button type="button" data-value="7" class="people-btn">7명</button>
+                        <button type="button" data-value="8" class="people-btn">8명</button>
+                        <button type="button" data-value="9" class="people-btn">9명</button>
+                    </div>
+                    <input type="hidden" name="saramsu" id="saramsu"/>
+
+                    <!-- 날짜 선택 -->
+                    <label for="bookingdate">날짜:</label>
+                    <input type="date" id="bookingdate" name="bookingdate"/>
+
+                    <!-- 시간 선택 -->
+                    <label>시간:</label>
+                    <div class="time-section">
+                        <div class="time-label1">오전</div>
+                        <div class="time-buttons" id="amTimes">
+                            <button type="button" class="time-btn" data-time="11:30">11:30</button>
+                        </div>
+
+                        <div class="time-label2">오후</div>
+                        <div class="time-buttons" id="pmTimes">
+                            <button type="button" class="time-btn" data-time="12:00">12:00</button>
+                            <button type="button" class="time-btn" data-time="12:30">12:30</button>
+                            <button type="button" class="time-btn" data-time="13:00">1:00</button>
+                            <button type="button" class="time-btn" data-time="13:30">1:30</button>
+                            <button type="button" class="time-btn" data-time="14:00">2:00</button>
+                            <button type="button" class="time-btn" data-time="14:30">2:30</button>
+                            <button type="button" class="time-btn" data-time="15:00">3:00</button>
+                            <button type="button" class="time-btn" data-time="15:30">3:30</button>
+                            <button type="button" class="time-btn" data-time="16:00">4:00</button>
+                            <button type="button" class="time-btn" data-time="16:30">4:30</button>
+                            <button type="button" class="time-btn" data-time="17:00">5:00</button>
+                            <button type="button" class="time-btn" data-time="17:30">5:30</button>
+                            <button type="button" class="time-btn" data-time="18:00">6:00</button>
+                            <button type="button" class="time-btn" data-time="18:30">6:30</button>
+                            <button type="button" class="time-btn" data-time="19:00">7:00</button>
+                            <button type="button" class="time-btn" data-time="19:30">7:30</button>
+                            <button type="button" class="time-btn" data-time="20:00">8:00</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="bookingtime" id="bookingtime"/>
+
+                    <button type="submit">예약하기</button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+</body>
+</html>

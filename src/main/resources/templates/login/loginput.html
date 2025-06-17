@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8" />
+  <title>로그인</title>
+  <link rel="stylesheet" th:href="@{/css/joinlogin.css}">
+</head>
+<body>
+
+<section layout:fragment="content">
+<br><br>
+<div th:if="${param.logout}" style="color:red; text-align:center;  font-weight:bold;">
+  로그아웃 되었습니다.
+</div>
+
+<form class="form" th:action="@{/loginProcess}" method="post">
+  <div id="heading">로그인</div>
+
+
+  <div class="field">
+    <input class="input-field" type="text" name="id" placeholder="아이디 입력" required />
+  </div>
+
+  <div class="field">
+    <input class="input-field" type="password" name="pw" placeholder="비밀번호 입력" required />
+  </div>
+
+  <div class="btn">
+    <input class="button" type="submit" value="로그인" />
+  </div>
+
+  <div class="links">
+    <a th:href="@{/joinput}">회원가입</a>
+    <span>|</span>
+    <a th:href="@{/login_Idfind}">아이디 찾기</a>
+    <span>|</span>
+    <a th:href="@{/login_Pwfind}">비밀번호 찾기</a>
+  </div>
+
+  <!-- 로그인 메시지 -->
+  <div th:if="${param.error}" style="color:red;  text-align:center;  font-weight:bold;">
+    아이디 또는 비밀번호가 잘못되었습니다.
+  </div>
+
+  <div th:if="${msg != null}" th:text="${msg}" style="color: green; text-align: center; font-weight: bold;"></div>
+
+
+  <!-- SNS 로그인 영역 -->
+  <div class="snslogin-wrapper">
+    <div class="snslogin-divider">
+      <span>SNS 간편 로그인 서비스</span>
+    </div>
+    <div class="sns-buttons">
+      <!-- ✅ 실제 카카오 로그인 경로로 수정 -->
+      <a th:href="@{/oauth2/authorization/kakao}" class="sns-btn sns-kakao">
+        <img src="/image/kakaosymbol.png" alt="카카오 로그인 아이콘" />
+        카카오 로그인
+      </a>
+      <a th:href="@{/oauth2/authorization/naver}" class="sns-btn sns-naver">
+        <img src="/image/naver.png" alt="네이버 로그인 아이콘" />
+        네이버 로그인
+      </a>
+      <a th:href="@{/oauth2/authorization/google}" class="sns-btn sns-google">
+        <img src="/image/google.png" alt="구글 로그인 아이콘" />
+        구글 로그인
+      </a>
+    </div>
+  </div>
+
+</form>
+
+</body>
+</html>

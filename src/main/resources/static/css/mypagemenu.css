@@ -1,0 +1,52 @@
+/* 개선된 왼쪽 메뉴바 디자인 */
+.category {
+  margin-top: 10px;
+  width: 200px;
+  padding: 30px 20px;
+  background-color: #fff3e0;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  height: 350px;
+}
+
+.category h1 {
+  color: #783403;
+  font-size: 1.8em;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.category nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category nav li {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.menulink {
+  font-size: 18px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 15px;
+  display: inline-block;
+  width: 100%;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.menulink:hover {
+  background-color: #ffe0b2;
+  color: #ED751C;
+}
+
+.menulink.active {
+  background-color: #ffd180;
+  color: #783403;
+  font-weight: bold;
+}

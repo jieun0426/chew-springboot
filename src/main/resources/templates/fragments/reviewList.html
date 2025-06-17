@@ -1,0 +1,44 @@
+<!-- fragments/rankList.html -->
+<div th:fragment="rankListContent" xmlns:th="http://www.w3.org/1999/xhtml" >
+  <div class="ListView">
+  <div th:each="store, status : ${toplist}" class="main_rankList">
+    <a th:href="@{/detailview(storecode=${store.storecode})}">
+      <img th:src="@{/image/{image}(image=${store.storeimage})}" class="storeimg">
+    </a>
+    <h1>
+      <a th:href="@{/detailview(storecode=${store.storecode})}" th:text="${store.storename}">맛집 이름</a>
+    </h1>
+    <div class="rating" th:id="'rating_' + ${status.index} + '_rank'">
+      <div class="stars" th:id="'stars_rank_' + ${status.index}" style="flex-direction: row-reverse;">
+
+        <input type="radio" th:id="'star5_rank_' + ${status.index}"
+               th:name="'rating_rank_' + ${status.index}" value="5" disabled
+               th:checked="${store.stars != null ? T(java.lang.Math).round(store.stars) == 5 : false}">
+        <label th:for="'star5_rank_' + ${status.index}"></label>
+
+        <input type="radio" th:id="'star4_rank_' + ${status.index}"
+               th:name="'rating_rank_' + ${status.index}" value="4" disabled
+               th:checked="${store.stars != null ? T(java.lang.Math).round(store.stars) == 4 : false}">
+        <label th:for="'star4_rank_' + ${status.index}"></label>
+
+        <input type="radio" th:id="'star3_rank_' + ${status.index}"
+               th:name="'rating_rank_' + ${status.index}" value="3" disabled
+               th:checked="${store.stars != null ? T(java.lang.Math).round(store.stars) == 3 : false}">
+        <label th:for="'star3_rank_' + ${status.index}"></label>
+
+        <input type="radio" th:id="'star2_rank_' + ${status.index}"
+               th:name="'rating_rank_' + ${status.index}" value="2" disabled
+               th:checked="${store.stars != null ? T(java.lang.Math).round(store.stars) == 2 : false}">
+        <label th:for="'star2_rank_' + ${status.index}"></label>
+
+        <input type="radio" th:id="'star1_rank_' + ${status.index}"
+               th:name="'rating_rank_' + ${status.index}" value="1" disabled
+               th:checked="${store.stars != null ? T(java.lang.Math).round(store.stars) == 1 : false}">
+        <label th:for="'star1_rank_' + ${status.index}"></label>
+
+      </div>
+    </div>
+    <p class="star-score" th:text="|${store.stars}점|" style="margin-bottom: 0;">0</p>
+  </div>
+</div>
+</div>

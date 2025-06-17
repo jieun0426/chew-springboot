@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>chew</title>
+
+  <!-- 공통 CSS -->
+  <link rel="stylesheet" th:href="@{/css/layout.css}">
+  <link rel="stylesheet" th:href="@{/css/top.css}">
+  <link rel="stylesheet" th:href="@{/css/searchinput.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <!-- 페이지별 CSS 삽입 가능 -->
+
+</head>
+<body>
+
+<div id="container">
+  <div th:replace="~{fragments/top :: menu}"></div>
+
+  <main>
+    <section layout:fragment="content">
+      <!-- 여기서 각 페이지가 채워넣음 -->
+    </section>
+  </main>
+
+  <div th:replace="~{fragments/footer::footer}"></div>
+</div>
+
+<a id="scroll-up" class="scroll-up" href="#" onclick="scrollToTop()">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" fill="none"></path>
+    <path fill="rgba(255,255,255,1)" d="M11.9997 10.8284L7.04996 15.7782L5.63574 14.364L11.9997 8L18.3637 14.364L16.9495 15.7782L11.9997 10.8284Z"></path>
+  </svg>
+</a>
+
+<!-- 공통 스크립트 -->
+<script>
+  window.onscroll = function () {
+    const scrollUpBtn = document.getElementById("scroll-up");
+    if (document.documentElement.scrollTop > 300) {
+      scrollUpBtn.style.display = "block";
+    } else {
+      scrollUpBtn.style.display = "none";
+    }
+  };
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

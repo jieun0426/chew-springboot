@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+    <link rel="stylesheet" th:href="@{/css/IdPwfind.css}">
+</head>
+<body>
+<section layout:fragment="content">
+<div class="wrapper">
+    <div class="form-container">
+
+        <script th:if="${alertMessage != null}">
+            alert('[[${alertMessage}]]');
+        </script>
+        <br>
+        <form th:action="@{/mypagepwchecking}" method="post">
+            <div id="heading">마이페이지</div>
+            <input class="input-field" type="password" name="pw" placeholder="비밀번호 입력" required>
+
+            <div class="button-area">
+                <input class="button1" type="submit" value="왼료">
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

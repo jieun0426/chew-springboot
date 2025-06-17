@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <link rel="stylesheet" th:href="@{/css/vtable.css}">
+</head>
+<body style="padding-top: 0">
+<section layout:fragment="content">
+    <form action="/modify" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <input type="hidden" name="currentStoreImage" value="${dto.storeimage}">
+        <table border="1" width="600px" align="center">
+            <tr>
+                <th>매장코드</th><td><input type="text" name="storecode" readonly th:value="${dto.storecode}"></td>
+            </tr>
+            <tr>
+                <th>매장명</th><td><input type="text" name="storename" th:value="${dto.storename}"></td>
+            </tr>
+            <tr>
+                <th>매장주소</th><td><input type="text" name="storeaddress" th:value="${dto.storeaddress}">
+            </tr>
+            <tr>
+                <th>매장카테고리</th><td><input type="text" name="storecategory" th:value="${dto.storecategory}">
+            </tr>
+            <tr>
+                <th>지역</th><td><input type="text" name="storearea" th:value="${dto.storearea}">
+            </tr>
+            <tr>
+                <th>매장이미지</th>
+                <td>
+                    <div class="file-input-container">
+                        <input type="file" id="storeimage" name="storemainimage" class="file-input" onchange="displayFileName()">
+                        <label for="storeimage" class="plusButton" title="파일 선택">
+                            <svg class="plusIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+                                <path d="M13.75 23.75V16.25H6.25V13.75H13.75V6.25H16.25V13.75H23.75V16.25H16.25V23.75H13.75Z"></path>
+                            </svg>
+                        </label>
+
+                        <span id="file-name" class="file-name"></span> <!-- 선택된 파일 이름 표시 -->
+                    </div>
+                    <img th:src="@{'/image/'+${dto.storeimage}}" width="200px" height="150px">
+                    <br><br>
+                </td>
+            </tr>
+            <tr>
+                <th>상세이미지</th>
+                <td>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 10px;">
+                        <div th:each="i : ${#numbers.sequence(0,3)}">
+                            <div class="file-input-container">
+                                <input type="file" th:id="'storeimage'+${i}" th:name="'storeimage'+${i}" class="file-input" onchange="displayFileName(this)">
+                                <label th:for="'storeimage'+${i}" class="plusButton" title="파일 선택">
+                                    <svg class="plusIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+                                        <path d="M13.75 23.75V16.25H6.25V13.75H13.75V6.25H16.25V13.75H23.75V16.25H16.25V23.75H13.75Z"></path>
+                                    </svg>
+                                </label>
+
+                                <span class="file-name"></span>
+                                <br>
+
+                                <!-- 이미지가 있는 경우 출력 -->
+                                <div th:if="${images != null and i < images.size()}">
+                                    <img th:src="@{'/image/' + ${images[i].id.imageFilename}}"
+                                         width="200px" height="150px"
+                                         style="margin-top: 5px; border: 1px solid #ccc; border-radius: 8px;">
+                                    <input type="hidden" th:name="'oldFilename' + ${i}" th:value="${images[i].id.imageFilename}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>주차 가능 여부</th>
+                <!-- radio로 -->
+                <td style="padding-left: 30px">
+                    <input type="radio" name="parking" value="1"> 가능&emsp;
+                    <input type="radio" name="parking" value="0"> 불가능
+                </td>
+            </tr>
+
+            <script th:inline="javascript">
+                const parkingValue = /*[[${dto.parking}]]*/ '0';
+
+                window.onload = function() {
+                    const radios = document.getElementsByName('parking');
+
+                    for (let i = 0; i < radios.length; i++) {
+                        if (radios[i].value == parkingValue) {
+                            radios[i].checked = true;
+                        }
+                    }
+                };
+            </script>
+
+            <tr>
+                <th>위도</th>
+                <td><input type="text" id="latitude" name="latitude" th:value="${dto.latitude}"></td>
+            </tr>
+            <tr>
+                <th>경도</th>
+                <td><input type="text" id="longitude" name="longitude" th:value="${dto.longitude}"></td>
+            </tr>
+            <tr>
+                <th>영업시간</th>
+                <td><input type="text" id="storehours" name="storehours" th:value="${dto.storehours}"></td>
+            </tr>
+
+        </table>
+
+        <br>
+        <input type="submit" value ="수정확인" class="buttons1">&emsp;
+        <input type="button" value ="취소" class="buttons1" onclick="location.href='sout';">
+
+    </form>
+</section>
+</body>
+</html>

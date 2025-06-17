@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+    <link rel="stylesheet" th:href="@{/css/mypagereview.css}">
+    <link rel="stylesheet" th:href="@{/css/mypagemenu.css}">
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="div-container">
+        <!-- 왼쪽 메뉴바 -->
+        <div class="category">
+            <h1>마이페이지</h1>
+            <nav>
+                <ul>
+                    <li><a th:href="@{/mypinfo}" class="menulink">회원정보 수정</a></li>
+                    <li><a th:href="@{/mypagebook}" class="menulink">예약내역</a></li>
+                    <li><a th:href="@{/mypagereview}" class="menulink active">작성한 리뷰</a></li>
+                    <li><a th:href="@{/mypagedel}" class="menulink">회원탈퇴</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- 리뷰 내역 -->
+        <div class="container">
+            <h2>내가 작성한 리뷰</h2>
+            <br>
+
+            <div th:if="${#lists.isEmpty(myreviews)}">
+                <div class="no-review">작성한 리뷰가 없습니다.</div>
+            </div>
+
+            <div th:if="${!#lists.isEmpty(myreviews)}">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>매장명</th>
+                        <th>제목</th>
+                        <th>내용</th>
+                        <th>별점</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="review : ${myreviews}">
+                        <td class="store-name">
+                            <a th:href="@{/detailview(storecode=${review.STORECODE})}" class="slink"
+                               th:text="${review.STORENAME}">매장명</a>
+                        </td>
+                        <td class="review-title" th:text="${review.TITLE}">제목</td>
+                        <td th:text="${review.CONTENT}">내용</td>
+                        <td>
+                            <div class="stars">
+                                <span th:each="i : ${#numbers.sequence(1, 5)}">
+                                    <span th:if="${i <= review.STARS}">★</span>
+                                    <span th:if="${i > review.STARS}">☆</span>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<br>
+    <div class="pagination" th:if="${totalPage > 1}">
+        <ul style="display: flex; list-style: none; gap: 5px; justify-content: center; align-items: center; padding: 0; margin: 0;">
+
+            <!-- 이전 블록 -->
+            <li th:if="${nowPageBlock > 0}" style="display: flex; align-items: center;">
+                <a th:href="@{/mypagereview(page=${(nowPageBlock - 1) * pageBlockSize})}"
+                   style="text-decoration: none; color: black;">이전</a>
+            </li>
+
+            <!-- 페이지 번호들 -->
+            <li th:each="pageNum : ${#numbers.sequence(nowPageBlock * pageBlockSize, T(java.lang.Math).min((nowPageBlock + 1) * pageBlockSize - 1, totalPage - 1))}"
+                style="display: flex; align-items: center;">
+
+                <!-- 현재 페이지 -->
+                <span th:if="${pageNum == nowpage}"
+                      th:text="${pageNum + 1}"
+                      style="font-weight: bold; color: red; display: inline-block; min-width: 20px; text-align: center;"></span>
+
+                <!-- 다른 페이지 -->
+                <a th:if="${pageNum != nowpage}"
+                   th:href="@{/mypagereview(page=${pageNum})}"
+                   th:text="${pageNum + 1}"
+                   style="text-decoration: none; color: black; display: inline-block; min-width: 20px; text-align: center;"></a>
+            </li>
+
+            <!-- 다음 블록 -->
+            <li th:if="${(nowPageBlock + 1) * pageBlockSize < totalPage}" style="display: flex; align-items: center;">
+                <a th:href="@{/mypagereview(page=${(nowPageBlock + 1) * pageBlockSize})}"
+                   style="text-decoration: none; color: black;">다음</a>
+            </li>
+        </ul>
+    </div>
+<br>
+</section>
+</body>
+</html>

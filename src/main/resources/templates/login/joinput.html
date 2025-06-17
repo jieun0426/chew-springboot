@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>회원가입</title>
+
+    <link rel="stylesheet" th:href="@{/css/joinlogin.css}">
+</head>
+<body>
+
+<section layout:fragment="content">
+
+    <form name="f" class="form" th:action="@{/joinsave}" th:object="${memberDTO}" method="post"
+          accept-charset="UTF-8" onsubmit="return send_go()">
+    <div id="heading">회원가입</div>
+
+    <!-- ID -->
+    <label class="required-label">ID <span class="required">*</span></label>
+    <div class="field">
+        <input class="input-field" type="text" th:field="*{id}" id="id"  placeholder="4~12자, 영문/숫자 조합">
+        <input class="id-check-btn" type="button" value="중복확인" id="logcheck">
+    </div>
+    <p th:if="${#fields.hasErrors('id')}" th:errors="*{id}" class="field-error"></p>
+
+    <!-- 비밀번호 -->
+    <label class="required-label">비밀번호 <span class="required">*</span></label>
+    <div class="field">
+        <input class="input-field" type="password" th:field="*{pw}" placeholder="4~15자, 영문/숫자">
+    </div>
+    <p th:if="${#fields.hasErrors('pw')}" th:errors="*{pw}" class="field-error"></p>
+
+    <!-- 이름 -->
+    <label class="required-label">이름 <span class="required">*</span></label>
+    <div class="field">
+        <input class="input-field" type="text" th:field="*{name}" placeholder="이름은 4자 이내, 숫자 불가">
+    </div>
+    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="field-error"></p>
+
+    <!-- 전화번호 -->
+    <label class="required-label">전화번호 <span class="required">*</span></label>
+    <div class="field">
+        <input class="input-field" type="text" th:field="*{phone}" placeholder="예: 010-1234-5678">
+    </div>
+    <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="field-error"></p>
+
+    <!-- 생년월일 -->
+    <label class="required-label">생년월일 <span class="required">*</span></label>
+    <div class="field">
+        <select id="birthYear" name="birthYear" required>
+            <option value="" disabled selected>년도</option>
+            <option th:each="y : ${#numbers.sequence(2025, 1900, -1)}" th:value="${y}" th:text="${y}"></option>
+        </select> 년&ensp;
+
+        <select id="birthMonth" name="birthMonth" required>
+            <option value="" disabled selected>월</option>
+            <option th:each="m : ${#numbers.sequence(1, 12)}" th:value="${m}" th:text="${m}"></option>
+        </select> 월&ensp;
+
+        <select id="birthDay" name="birthDay" required>
+            <option value="" disabled selected>일</option>
+            <option th:each="d : ${#numbers.sequence(1, 31)}" th:value="${d}" th:text="${d}"></option>
+        </select> 일
+
+        <input type="hidden" th:field="*{birth}" id="birth">
+    </div>
+    <p th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}" class="field-error"></p>
+
+    <div class="btn">
+        <input class="button" type="submit" value="회원가입">
+        <input class="button" type="reset" value="취소">
+    </div>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    function send_go() {
+        const y = document.getElementById("birthYear").value;
+        let m = document.getElementById("birthMonth").value;
+        let d = document.getElementById("birthDay").value;
+
+        if (!y || !m || !d) {
+            alert("생년월일을 모두 선택하세요.");
+            return false;
+        }
+
+        m = m.toString().padStart(2, '0');
+        d = d.toString().padStart(2, '0');
+
+        const fullBirth = `${y}-${m}-${d}`;
+        document.getElementById("birth").value = fullBirth;
+
+        return true;
+    }
+
+    $(document).ready(function () {
+        const token = $("meta[name='_csrf']").attr("content");
+        const header = $("meta[name='_csrf_header']").attr("content");
+
+        $("#logcheck").click(function () {
+            const id = $("#id").val().trim();
+            if (!id) {
+                alert("ID를 입력하세요.");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/logcheck",
+                data: { id: id },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    if (data === "ok") {
+                        alert("사용 가능한 ID입니다.");
+                    } else if (data === "duplicate") {
+                        alert("이미 사용 중인 ID입니다.");
+                    } else {
+                        alert("알 수 없는 응답입니다: " + data);
+                    }
+                },
+                error: function () {
+                    alert("중복 확인 중 오류가 발생했습니다.");
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <link rel="stylesheet" th:href="@{/css/FAQout.css}">
+    <link rel="stylesheet" th:href="@{/css/htable.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/FAQout.js"></script>
+</head>
+<body style="padding-top: 0"
+      th:data-loginstate="${#authorization.expression('isAuthenticated()')}"
+      th:data-id="${#authentication.name}">
+<section layout:fragment="content">
+    <h2>FAQ</h2>
+
+    <div id="FAQ_list">
+        <div>
+            <input type="button" id="writeBtn" value="FAQ 작성">
+            내 FAQ만 보기 <label class="switch">
+                <input type="checkbox" id="myFAQ" th:checked="${check}">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <table width="1000px">
+            <thead>
+            <tr>
+                <th width="120px">답변상태</th>
+                <th width="640px">제목</th>
+                <th width="120px">작성자</th>
+                <th width="120px">작성일</th>
+                <th sec:authorize="hasRole('ADMIN')"></th>
+            </tr>
+            </thead>
+            <tbody id="FAQ_table_body">
+                <th:block th:if="${#lists.isEmpty(qlist)}">
+                    <tr><td colspan="4">등록된 FAQ가 없습니다</td></tr>
+                </th:block>
+
+                <th:block th:unless="${#lists.isEmpty(qlist)}">
+                    <tr th:each="q : ${qlist}">
+                        <th:block th:if="${q.secret == 1}">
+                            <td th:text="${q.state}"></td>
+                            <td>
+                                <th:block th:if="${q.id == id or id == 'admin'}">
+                                    <button class="secretBtn" th:value="${q.num}">
+                                        <span th:text="${q.title}"></span> 🔒
+                                    </button>
+                                </th:block>
+                                <th:block th:unless="${q.id == id or id == 'admin'}">
+                                    <button class="secretBtn" th:value="${q.num}">
+                                        비밀글입니다 🔒
+                                    </button>
+                                </th:block>
+                            </td>
+                            <td th:text="${q.id}"></td>
+                            <td th:text="${q.wdate}"></td>
+                            <td th:if="${id} == 'admin' or ${id} == ${q.id}">
+                                <a th:href="@{/deleteItem(num=${q.num})}">
+                                    <i class="fa-solid fa-trash-can" style="color: #ED751C;"></i>
+                                </a>
+                            </td>
+                        </th:block>
+
+                        <th:block th:if="${q.secret == 0}">
+                            <td th:text="${q.state}"></td>
+                            <td>
+                                <button class="titleBtn" th:value="${q.num}" th:text="${q.title}"></button>
+                            </td>
+                            <td th:text="${q.id}"></td>
+                            <td th:text="${q.wdate}"></td>
+                            <td th:if="${id} == 'admin' or ${id} == ${q.id}">
+                                <a th:href="@{/deleteItem(num=${q.num})}" >
+                                    <i class="fa-solid fa-trash-can" style="color: #ED751C;"></i>
+                                </a>
+                            </td>
+                        </th:block>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+
+        <div th:if="${qlist != null}" style="align-items: center; line-height: 2em;">
+            <div class="pagination">
+                <ul style="display: flex; list-style: none; gap: 10px;">
+                    <!-- 이전 블록 -->
+                    <li th:if="${nowPageBlock > 0}">
+                        <a th:href="@{/FAQ(page=${(nowPageBlock - 1) * pageBlockSize},check=${check})}">이전</a>
+                    </li>
+
+                    <li th:each="pageNum : ${#numbers.sequence(nowPageBlock * pageBlockSize, T(java.lang.Math).min((nowPageBlock + 1) * pageBlockSize - 1, totalPage - 1))}">
+                        <a th:if="${pageNum != nowpage}"
+                           th:href="@{/FAQ(page=${pageNum},check=${check})}"
+                           th:text="${pageNum + 1}"></a>
+                        <span th:if="${pageNum == nowpage}"
+                              style="font-weight: bold; color: red;"
+                              th:text="${pageNum + 1}"></span>
+                    </li>
+
+                    <!-- 다음 블록 -->
+                    <li th:if="${(nowPageBlock + 1) * pageBlockSize < totalPage}">
+                        <a th:href="@{/FAQ(page=${(nowPageBlock + 1) * pageBlockSize},check=${check})}">다음</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

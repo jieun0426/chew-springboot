@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>회원정보 수정</title>
+    <link rel="stylesheet" th:href="@{/css/mypageup.css}">
+    <link rel="stylesheet" th:href="@{/css/mypagemenu.css}">
+</head>
+<body>
+<section layout:fragment="content">
+<div class="div-container">
+    <div class="category">
+        <h1>마이페이지</h1>
+        <nav>
+            <ul>
+                <li><a href="mypinfo" class="menulink active">회원정보 수정</a></li>
+                <li><a href="mypagebook" class="menulink">예약내역</a></li>
+                <li><a href="mypagereview" class="menulink">작성한 리뷰</a></li>
+                <li><a href="mypagedel" class="menulink">회원탈퇴</a></li>
+            </ul>
+        </nav>
+    </div>
+
+
+
+    <form name="f" class="form" th:action="@{/myinfosave}" th:object="${updateMemberDTO}" method="post" onsubmit="return send_go()">
+        <div id="heading">회원정보 수정</div>
+
+
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            var alertMessage = /*[[${alertMessage}]]*/ null;
+            if (alertMessage) {
+                alert(alertMessage);
+            }
+            /*]]>*/
+        </script>
+
+        <!-- ID -->
+        <label class="required-label">ID</label>
+        <div class="field">
+            <input class="input-field" type="text" th:field="*{id}" readonly>
+        </div>
+
+        <!-- 이름 -->
+        <label class="required-label">이름</label>
+        <div class="field">
+            <input class="input-field" type="text" th:field="*{name}" placeholder="이름을 입력하세요">
+        </div>
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="field-error"></p>
+
+        <!-- 전화번호 -->
+        <label class="required-label">전화번호</label>
+        <div class="field">
+            <input class="input-field" type="text" th:field="*{phone}" placeholder="예: 010-1234-5678">
+        </div>
+        <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="field-error"></p>
+
+        <!-- 생년월일 -->
+        <label class="required-label">생년월일</label>
+        <div class="field">
+            <select id="birthYear" required>
+                <option value="" disabled th:selected="${updateMemberDTO.birth == null}">년도</option>
+                <option th:each="y : ${#numbers.sequence(2025, 1900, -1)}" th:value="${y}" th:text="${y}"></option>
+            </select> 년 &ensp;
+
+            <select id="birthMonth" required>
+                <option value="" disabled th:selected="${updateMemberDTO.birth == null}">월</option>
+                <option th:each="m : ${#numbers.sequence(1, 12)}" th:value="${m}" th:text="${m}"></option>
+            </select> 월 &ensp;
+
+            <select id="birthDay" required>
+                <option value="" disabled th:selected="${updateMemberDTO.birth == null}">일</option>
+                <option th:each="d : ${#numbers.sequence(1, 31)}" th:value="${d}" th:text="${d}"></option>
+            </select> 일
+
+            <input type="hidden" th:field="*{birth}" id="birth" />
+        </div>
+        <p th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}" class="field-error"></p>
+
+        <br>
+        <button id="loginButton" class="button login-btn" type="submit">수정완료</button>
+    </form>
+</div>
+
+<!-- 생년월일 처리 -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const birth = /*[[${updateMemberDTO.birth}]]*/ '';
+    /*]]>*/
+
+    window.onload = function () {
+        if (birth) {
+            const parts = birth.split('-');
+            if (parts.length === 3) {
+                document.getElementById("birthYear").value = parts[0];
+                document.getElementById("birthMonth").value = parseInt(parts[1], 10);
+                document.getElementById("birthDay").value = parseInt(parts[2], 10);
+            }
+        }
+    }
+
+    function send_go() {
+        const y = document.getElementById("birthYear").value;
+        const m = document.getElementById("birthMonth").value.padStart(2, '0');
+        const d = document.getElementById("birthDay").value.padStart(2, '0');
+
+        if (!y || !m || !d) {
+            alert("생년월일을 모두 선택해주세요.");
+            return false;
+        }
+
+        const fullBirth = `${y}-${m}-${d}`;
+        document.getElementById("birth").value = fullBirth;
+        console.log("📌 최종 생일 값:", fullBirth);
+        return true;
+    }
+</script>
+<br>
+</body>
+</html>

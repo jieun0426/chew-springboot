@@ -1,0 +1,42 @@
+body {
+        font-family: 'Arial', sans-serif;
+        text-align: center;
+    }
+
+    .title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #DAA520;
+        margin-bottom: 15px;
+    }
+
+    .userid {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .button {
+        padding: 8px 16px;
+        font-size: 15px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .button:hover {
+        background-color: #e6c200;
+    }
+
+    .login-btn, .pwfind-btn, .idfind-btn {
+        background-color: #FFD700;
+        color: #333;
+    }
+
+    .field-error {
+        color: red;
+        font-size: 0.9em;
+        font-weight: 600;
+    }

@@ -1,0 +1,84 @@
+@charset "UTF-8";
+.container {
+      width: 70%;
+      padding: 30px;
+      border-radius: 10px;
+      margin: 20px auto 50px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .no-book {
+      text-align: center;
+      color: gray;
+      padding: 50px;
+    }
+
+    table {
+      width: 90%;
+      border-collapse: collapse;
+      font-size: 15px;
+      margin: 0 auto;
+    }
+
+    thead {
+      border-bottom: 2px solid #ED751C;
+      background-color: #fff4ea;
+    }
+
+    th {
+      padding: 15px 10px;
+      text-align: center;
+      color: #ED751C;
+      font-weight: bold;
+      background-color: white;
+      font-size: 16px;
+    }
+
+    td {
+      padding: 14px 10px;
+      text-align: center;
+      color: #333;
+      border-bottom: 1px solid #eee;
+      background-color: white;
+    }
+
+    .store-name a {
+      color: #ED751C;
+      font-weight: bold;
+      font-size: 16px;
+      text-decoration: none;
+    }
+
+    .slink {
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .slink:hover {
+      color: #ED751C;
+      text-decoration: underline;
+    }
+    
+/* 페이징 */
+
+#nowPage{
+  color: black;
+  font-weight: bold;
+  margin-left: 40px;
+}
+.pageList{
+  color: #aaaa7a;
+  text-decoration: none; 
+}
+.pageList, #nowPage {
+  margin: 0 2px;  /* 좌우 간격 5px로 설정 */
+  font-size: 16px;
+  text-decoration: none;
+}

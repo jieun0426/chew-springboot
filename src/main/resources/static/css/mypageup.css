@@ -1,0 +1,119 @@
+body {
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  background-color: #fff8e1;
+  flex-direction: column;
+  gap: 12px;
+  padding: 2em;
+  border-radius: 25px;
+  width: 480px;
+  margin: auto;
+  margin-top: -10px;
+  border: none;
+  box-shadow: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#heading {
+  text-align: center;
+  margin-bottom: 1em;
+  color: #333;
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+.required-label {
+  font-size: 0.95em;
+  color: #333;
+  font-weight: 500;
+  margin: 5px 0 2px 5px;
+  text-align: center;
+  width: 100%;
+}
+
+.required {
+  color: red;
+  font-weight: bold;
+  margin-left: 3px;
+}
+
+.field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.input-field {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 1em;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.btn {
+  width: 100%;
+  display: flex;
+  max-width: 400px;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1em;
+  box-shadow: none !important;
+}
+
+.button {
+  width: 100%;
+  padding: 12px;
+  max-width: 400px;
+  border-radius: 10px;
+  border: none;
+  text-align: center;
+  font-size: 1em;
+  font-weight: bold;
+  color: #000;
+  background-color: #FFD732;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #ffc400;
+}
+
+.login-btn {
+  background-color: #FFD700;
+  color: #333;
+}
+
+.div-container {
+  margin-top: 30px;
+  display: flex;
+  width: 90%;
+  justify-content: space-evenly;
+}
+
+* {
+  outline: none !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+select {
+	width: 95px;
+	padding: 12px 16px;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+	outline: none;
+	font-size: 1em;
+	box-sizing: border-box;
+	background-color: #fff;
+}

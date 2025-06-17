@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+#top_div {
+	height: 230px;
+	width: 100%;
+	text-align: center;
+	background-color: #fbf8ef;
+	display: flex;
+	justify-content: center; /* 수평 중앙 */
+	align-items: center;     /* 수직 중앙 */
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	border: solid;
+	border-width: 2px;
+	border-color: #C6B89E;
+	border-bottom: 0; 
+	border-left: 0;
+	border-right: 0;
+}
+
+#logo {
+	width: 330px;
+	margin: 0;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {color: black;}

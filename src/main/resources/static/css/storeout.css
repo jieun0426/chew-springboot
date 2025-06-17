@@ -1,0 +1,79 @@
+@charset "UTF-8";
+img{
+	display: block;
+	margin: auto;
+}
+
+#nowPage{
+  color: black;
+  font-weight: bold;
+}
+
+.pageList{
+  color: #aaaa7a;
+  text-decoration: none; 
+}
+
+a {
+  color: black;
+  text-decoration: none; 
+}
+
+.input_div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  margin: 10px auto;
+  width: 1100px;
+}
+
+/* 매장관리 -> 삭제 버튼 */
+.deleteBtn {
+  border: none;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(233, 193, 16, 0.164);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  gap: 2px;
+}
+
+.svgIcon {
+  width: 12px;
+  transition-duration: 0.3s;
+}
+
+.svgIcon path {
+  fill: white;
+}
+
+.deleteBtn:hover {
+  transition-duration: 0.3s;
+}
+
+.bin-top {
+  transform-origin: bottom right;
+}
+
+.deleteBtn:hover .bin-top {
+  transition-duration: 0.5s;
+  transform: rotate(160deg);
+}
+
+.search-group {
+  /*flex: 1;*/
+  display: flex;
+  min-width: 200px;
+}
+/* 검색창 끝 */
+
+.button-group {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}

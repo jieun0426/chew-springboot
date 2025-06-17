@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <link rel="stylesheet" th:href="@{/css/htable.css}">
+</head>
+<body style="padding-top: 0">
+<section layout:fragment="content">
+    <form action="/deleteOneStore" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <table width="1100px">
+            <thead>
+            <tr style="text-align: center;">
+                <th>매장코드</th>
+                <th>매장명</th>
+                <th>매장주소</th>
+                <th>매장카테고리</th>
+                <th>지역</th>
+                <th>매장이미지</th>
+                <th>주차여부</th>
+                <th>위도</th>
+                <th>경도</th>
+                <th>영업시간</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="align_center" th:text="${dto.storecode}"></td>
+                <td class="align_center" th:text="${dto.storename}"></td>
+                <td class="align_center" th:text="${dto.storeaddress}"></td>
+                <td class="align_center" th:text="${dto.storecategory}"></td>
+                <td class="align_center" th:text="${dto.storearea}"></td>
+                <td class="align_center">
+                    <img th:src="@{'/image/' + ${dto.storeimage}}" width="70px" height="50px"
+                         style="border: 1px solid #ccc; border-radius: 6px;">
+                </td>
+                <td class="align_center">
+                    <span th:if="${parking==1}">가능</span>
+                    <span th:unless="${parking==1}">불가능</span>
+                </td>
+                <td class="align_center" th:text="${dto.latitude}"></td>
+                <td class="align_center" th:text="${dto.longitude}"></td>
+                <td class="align_center" th:text="${dto.storehours}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <input type="hidden" name="storecode" th:value="${dto.storecode}">
+        <input type="hidden" name="storeimage" th:value="${dto.storeimage}">
+        <div style="text-align: center; margin-top: 20px;">
+            <button type="submit" class="buttons1">삭제 확인</button>
+            <button type="button" onclick="location.href='sout';" class="buttons1">취소</button>
+        </div>
+
+    </form>
+</section>
+</body>
+</html>
