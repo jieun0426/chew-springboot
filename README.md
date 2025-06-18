@@ -44,7 +44,7 @@ Embedded Tomcat 9.0, Git, GitHub, Kakao Map API
 - 날짜 및 시간 선택 후 예약
 - 사용자 로그인 및 마이페이지(회원정보 수정, 내가 쓴 리뷰, 예약 보기)
 - FAQ 등록 및 비밀글 쓰기
-- 관리자 페이지(매장 관리, 회원관리, 예약 관리 등)
+- 관리자 페이지(매장 관리, 회원관리, 리뷰 관리, 예약 관리 등)
 <br><br>
 ## ERD Diagram
 ![erd](https://github.com/user-attachments/assets/95b19d95-2d86-4a72-9988-31510382982c)
@@ -89,14 +89,15 @@ Embedded Tomcat 9.0, Git, GitHub, Kakao Map API
 
 <br><br>
 # 설치 및 실행 방법
-1. 이 저장소 클론 - git clone https://github.com/jieun0426/chew.git
+1. 이 저장소 클론 - git clone https://github.com/jieun0426/chew-springboot.git
 
 2. IDE에서 열기
 
-3. 서버 설정 - 포트번호 8077
+3. 서버 설정 - 포트번호 1602
 
 4. DB 설정 - 접속 이름 : MBC / 패스워드 : 1234 / 호스트이름 : localhost / 포트 : 1521 / SID : xe
 
+5. 주소창에 localhost:1602 검색
 <br><br>
 # SQL 스크립트
 
@@ -112,9 +113,6 @@ Embedded Tomcat 9.0, Git, GitHub, Kakao Map API
 <br><br>
 
 # 회고 및 느낀점
-- MVC 패턴을 실제로 적용해보며 이해도가 높아짐
-- Git 협업 경험이 생김
+- 기존 스프링 프로젝트를 부트 형식으로 전환하면서 유지보수의 중요성과 까다로움을 직접 체감할 수 있었습니다.
 
 
-# 첨부 파일
-[Chewtopia (1).pdf](https://github.com/user-attachments/files/20199273/Chewtopia.1.pdf)
