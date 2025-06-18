@@ -21,14 +21,22 @@
 # 프로젝트 소개
 - 목표 : 간편한 예약 시스템과 직관적인 맛집 탐색 기능 제공
 - 대상 : 외식 전 예약을 선호하는 사용자
-- 프로젝트 기간 : 2025.04.09 - 2025.05.14
+- 프로젝트 기간 : 2025.06.02 - 2025.06.13
 <br><br>
 
 # 기술 스택
-- 프론트엔드 : HTML, CSS, JavaScript, AJAX, JQuery, JSTL
-- 백엔드 : Java 11, JSP, Spring MVC, Tiles(프레임워크), MyBatis, Spring JDBC
-- Datebase : Oracle
-- 기타 : Tomcat 9.0, Git, GitHub, kakao map API
+🌐 프론트엔드
+HTML, CSS, JavaScript, AJAX, jQuery, Thymeleaf, JSON
+
+🔧 백엔드
+Java 17, Spring Boot, Spring MVC(내장), Spring Security,
+Spring Data JPA, Bean Validation, Lombok, Spring Web
+
+🛢 데이터베이스
+Oracle, Hibernate(JPA)
+
+⚙️ 서버 및 도구
+Embedded Tomcat 9.0, Git, GitHub, Kakao Map API
 <br><br>
 
 # 주요 기능
